@@ -13,3 +13,22 @@ $col-12: 2* $col-6;
 $height-base: 50px;
 $break-tablet: 450px;
 $break-desk: 1000px;
+
+$columns : 12;
+$column-width : 100%/$columns;
+$breakpoints : (xs : 350px, sm : 550px, md : 768px, lg : 992px, xl : 1200px );
+@function column-width($column){
+  @return $column-width*$column;
+}
+@mixin column($media, $min-width){
+  @media (min-width:$min-width){
+    @for $i from 1 through $columns {
+      .column-#{$media}-#{$i} {
+        width: column-width($i);
+      }
+    }
+  }
+}
+@each $name, $width in $breakpoints {
+  @include column($name, $width);
+}
